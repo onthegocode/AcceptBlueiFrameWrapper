@@ -96,16 +96,14 @@ class HostedIFrame {
 
 	//takes an arrow function as a parameter
 	_observe(injectedCode) {
-		{
-			//First checks to see if the script tag has been added before running code
-			const mutationObserver = new MutationObserver((entries) => {
-				entries.forEach((e) => {
-					if ((e.addedNodes[0].id = this.#scriptMount)) {
-						injectedCode(); //any code you write in function will be here
-					}
-				});
+		//First checks to see if the script tag has been added before running code
+		const mutationObserver = new MutationObserver((entries) => {
+			entries.forEach((e) => {
+				if ((e.addedNodes[0].id = this.#scriptMount)) {
+					injectedCode(); //any code you write in function will be here
+				}
 			});
-			mutationObserver.observe(this.#observeParent, { childList: true });
-		}
+		});
+		mutationObserver.observe(this.#observeParent, { childList: true });
 	}
 }
