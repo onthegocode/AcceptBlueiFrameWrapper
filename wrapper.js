@@ -3,13 +3,17 @@
 (() => {
 	let script = document.createElement("script");
 	script.src = "https://tokenization.develop.accept.blue/tokenization/v0.2";
-	script.id = "iFrame";
+	script.id = "_iFrame";
 	document.head.appendChild(script);
 })();
 
+const _dataAttributeType = "value"; //used to easily set what data attribute you'd like. Using convention _ to indicate its a variable not to be used
+
 // Class that wraps Accept.blue iFrame
 class HostedIFrame {
-	cardForm; //private field
+	cardForm;
+	#scriptMount = "_iFrame"; //private field
+	#observeParent = document.querySelector("head");
 	constructor(tokenSourceKey, iframeMount, btnMount) {
 		this.tokenSourceKey = tokenSourceKey;
 		this.iframeMount = `#${iframeMount}`;
@@ -17,23 +21,15 @@ class HostedIFrame {
 	}
 
 	init() {
-		//First checks to see if the script tag has been added before running code
-		const mutationObserver = new MutationObserver((entries) => {
-			entries.forEach((e) => {
-				if ((e.addedNodes[0].id = "iFrame")) {
-					const tokenizationSourceKey = this.tokenSourceKey;
-					const hostedTokenization = new window.HostedTokenization(
-						tokenizationSourceKey
-					);
-					//Creates and mounts the credit card form
-					this.cardForm = hostedTokenization
-						.create("card-form")
-						.mount(this.iframeMount);
-				}
-			});
+		this._observe(() => {
+			const tokenizationSourceKey = this.tokenSourceKey;
+			const hostedTokenization = new window.HostedTokenization(
+				tokenizationSourceKey
+			);
+			this.cardForm = hostedTokenization
+				.create("card-form")
+				.mount(this.iframeMount);
 		});
-		const parent = document.querySelector("head");
-		mutationObserver.observe(parent, { childList: true });
 		return this;
 	}
 
@@ -66,24 +62,21 @@ class HostedIFrame {
 
 	//used to preset styles based on an object that will be provided with multiple items within that will change the style
 	styles(styles) {
-		const mutationObserver = new MutationObserver((entries) => {
-			entries.forEach((e) => {
-				if ((e.addedNodes[0].id = "iFrame")) {
-					this.cardForm.setStyles(styles);
-				}
-			});
+		this._observe(() => {
+			this.cardForm.setStyles(styles);
 		});
-		const parent = document.querySelector("head");
-		mutationObserver.observe(parent, { childList: true });
 	}
 
 	_errorMount(errorMount, _mainError, textContent = false) {
 		const eMount = $(`#${errorMount}`);
+
+		eMount.attr(_dataAttributeType, _mainError);
+
 		if (textContent) {
 			eMount.text(_mainError);
 		}
-		eMount.attr("value", _mainError);
 	}
+
 	_resultMount(
 		result,
 		formMount,
@@ -93,11 +86,26 @@ class HostedIFrame {
 		cardTypeMount,
 		last4Mount
 	) {
-		$(`#${tokenMount}`).attr("value", result.nonce);
-		$(`#${expiryMonthMount}`).attr("value", result.expiryMonth);
-		$(`#${expiryYearMount}`).attr("value", result.expiryYear);
-		$(`#${cardTypeMount}`).attr("value", result.cardType);
-		$(`#${last4Mount}`).attr("value", result.last4);
+		$(`#${tokenMount}`).attr(_dataAttributeType, result.nonce);
+		$(`#${expiryMonthMount}`).attr(_dataAttributeType, result.expiryMonth);
+		$(`#${expiryYearMount}`).attr(_dataAttributeType, result.expiryYear);
+		$(`#${cardTypeMount}`).attr(_dataAttributeType, result.cardType);
+		$(`#${last4Mount}`).attr(_dataAttributeType, result.last4);
 		$(`#${formMount}`).submit();
+	}
+
+	//takes an arrow function as a parameter
+	_observe(injectedCode) {
+		{
+			//First checks to see if the script tag has been added before running code
+			const mutationObserver = new MutationObserver((entries) => {
+				entries.forEach((e) => {
+					if ((e.addedNodes[0].id = this.#scriptMount)) {
+						injectedCode(); //any code you write in function will be here
+					}
+				});
+			});
+			mutationObserver.observe(this.#observeParent, { childList: true });
+		}
 	}
 }
