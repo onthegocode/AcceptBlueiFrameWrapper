@@ -8,7 +8,17 @@
 })();
 
 const _dataAttributeType = "value"; //used to easily set what data attribute you'd like. Using convention _ to indicate its a variable not to be used
-
+//Used to Get an element based on id and Set a method to it ex: setAttribute, submit, and textContent - setAttribute is default
+const _getAndSet = (id) => {
+	Object.entries(id).forEach((e) => {
+		const el = document.getElementById(e[0]);
+		if (e[1]["submit"] || e[1]["text"]) {
+			e[1]["submit"] ? el.submit() : (el.textContent = e[1]["value"]);
+		} else {
+			el.setAttribute(_dataAttributeType, e[1]["value"]); // default
+		}
+	});
+};
 // Class that wraps Accept.blue iFrame
 class HostedIFrame {
 	cardForm;
@@ -17,7 +27,7 @@ class HostedIFrame {
 	constructor(tokenSourceKey, iframeMount, btnMount) {
 		this.tokenSourceKey = tokenSourceKey;
 		this.iframeMount = `#${iframeMount}`;
-		this.btnMount = `#${btnMount}`;
+		this.btnMount = `${btnMount}`;
 	}
 
 	init() {
@@ -32,11 +42,10 @@ class HostedIFrame {
 		});
 		return this;
 	}
-
 	//Submits and mounts the result of the card form. Returns the nonce token, expirymonth, expiryyear, and cardtype and last4
 	//Takes an object as the argument
 	submit(submitMounts) {
-		$(this.btnMount).click(() => {
+		this._clicked(this.btnMount, () => {
 			const resultMount = this._resultMount; //set outside the promise to access HostedIFrame
 			const errorResult = this._errorMount; //set outside the promise to access HostedIFrame
 			this.cardForm
@@ -59,7 +68,6 @@ class HostedIFrame {
 				});
 		});
 	}
-
 	//used to preset styles based on an object that will be provided with multiple items within that will change the style
 	styles(styles) {
 		this._observe(() => {
@@ -68,13 +76,7 @@ class HostedIFrame {
 	}
 
 	_errorMount(errorMount, _mainError, textContent = false) {
-		const eMount = $(`#${errorMount}`);
-
-		eMount.attr(_dataAttributeType, _mainError);
-
-		if (textContent) {
-			eMount.text(_mainError);
-		}
+		_getAndSet({ [errorMount]: { value: _mainError, text: textContent } });
 	}
 
 	_resultMount(
@@ -86,14 +88,15 @@ class HostedIFrame {
 		cardTypeMount,
 		last4Mount
 	) {
-		$(`#${tokenMount}`).attr(_dataAttributeType, result.nonce);
-		$(`#${expiryMonthMount}`).attr(_dataAttributeType, result.expiryMonth);
-		$(`#${expiryYearMount}`).attr(_dataAttributeType, result.expiryYear);
-		$(`#${cardTypeMount}`).attr(_dataAttributeType, result.cardType);
-		$(`#${last4Mount}`).attr(_dataAttributeType, result.last4);
-		$(`#${formMount}`).submit();
+		_getAndSet({
+			[tokenMount]: { value: result.nonce },
+			[expiryMonthMount]: { value: result.expiryMonth },
+			[expiryYearMount]: { value: result.expiryYear },
+			[cardTypeMount]: { value: result.cardType },
+			[last4Mount]: { value: result.last4 },
+			[formMount]: { submit: true },
+		});
 	}
-
 	//takes an arrow function as a parameter
 	_observe(injectedCode) {
 		//First checks to see if the script tag has been added before running code
@@ -105,5 +108,9 @@ class HostedIFrame {
 			});
 		});
 		mutationObserver.observe(this.#observeParent, { childList: true });
+	}
+	//event listener to see if element based on Id was clicked or not
+	_clicked(id, injectedCode) {
+		document.getElementById(id).addEventListener("click", injectedCode);
 	}
 }
