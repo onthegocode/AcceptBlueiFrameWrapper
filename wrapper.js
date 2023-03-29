@@ -14,9 +14,8 @@ const _getAndSet = (id) => {
 		const el = document.getElementById(e[0]);
 		if (e[1]["submit"] || e[1]["text"]) {
 			e[1]["submit"] ? el.submit() : (el.textContent = e[1]["value"]);
-		} else {
-			el.setAttribute(_dataAttributeType, e[1]["value"]); // default
 		}
+		el.setAttribute(_dataAttributeType, e[1]["value"]); // default
 	});
 };
 // Class that wraps Accept.blue iFrame
@@ -94,7 +93,7 @@ class HostedIFrame {
 			[expiryYearMount]: { value: result.expiryYear },
 			[cardTypeMount]: { value: result.cardType },
 			[last4Mount]: { value: result.last4 },
-			[formMount]: { submit: true },
+			// [formMount]: { submit: true },
 		});
 	}
 	//takes an arrow function as a parameter
@@ -112,5 +111,16 @@ class HostedIFrame {
 	//event listener to see if element based on Id was clicked or not
 	_clicked(id, injectedCode) {
 		document.getElementById(id).addEventListener("click", injectedCode);
+	}
+
+	_VerifyAndSave() {
+		//code
+	}
+
+	Charge() {
+		//code
+	}
+	_ajaxCall() {
+		//code
 	}
 }
