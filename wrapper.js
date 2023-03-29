@@ -99,10 +99,28 @@ class HostedIFrame {
 	}
 
 	_VerifyAndSave() {
-		//code
+		//Pseudo Code
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: "/api/ControllerName/Method", //(Will most likely be /api/Transactions/SourceVerifyAndSave)
+		// 	contentType: "application/json",
+		// 	data: JSON.stringify("obj"),
+		// 	success: (response) => {
+		// 		//do something
+		// 	},
+		// 	failure: (response) => {
+		// 		//do something
+		// 	},
+		// 	error: (response) => {
+		// 		// do something
+		// 	},
+		// });
 	}
 
 	Charge() {
+		//code
+	}
+	Refund() {
 		//code
 	}
 	_ajaxCall() {
