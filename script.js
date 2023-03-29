@@ -1,5 +1,5 @@
 let iFrame = new HostedIFrame(
-	"pk_rOYu",
+	"pk_rOYu" //add your own public key,
 	"my-div",
 	"btnSubmit"
 );
