@@ -21,8 +21,6 @@ const _getAndSet = (id) => {
 // Class that wraps Accept.blue iFrame
 class HostedIFrame {
 	cardForm;
-	#scriptMount = "_iFrame"; //private field
-	#observeParent = document.querySelector("head");
 	constructor(tokenSourceKey, iframeMount, btnMount) {
 		this.tokenSourceKey = tokenSourceKey;
 		this.iframeMount = `#${iframeMount}`;
@@ -30,15 +28,12 @@ class HostedIFrame {
 	}
 
 	init() {
-		this._observe(() => {
-			const tokenizationSourceKey = this.tokenSourceKey;
-			const hostedTokenization = new window.HostedTokenization(
-				tokenizationSourceKey
-			);
-			this.cardForm = hostedTokenization
+		this._onLoad(() => {
+			this.cardForm = new window.HostedTokenization(this.tokenSourceKey)
 				.create("card-form")
 				.mount(this.iframeMount);
 		});
+
 		return this;
 	}
 	//Submits and mounts the result of the card form. Returns the nonce token, expirymonth, expiryyear, and cardtype and last4
@@ -69,9 +64,7 @@ class HostedIFrame {
 	}
 	//used to preset styles based on an object that will be provided with multiple items within that will change the style
 	styles(styles) {
-		this._observe(() => {
-			this.cardForm.setStyles(styles);
-		});
+		this._onLoad(() => this.cardForm.setStyles(styles));
 	}
 
 	_errorMount(errorMount, _mainError, textContent = false) {
@@ -93,20 +86,12 @@ class HostedIFrame {
 			[expiryYearMount]: { value: result.expiryYear },
 			[cardTypeMount]: { value: result.cardType },
 			[last4Mount]: { value: result.last4 },
-			// [formMount]: { submit: true },
+			[formMount]: { submit: true },
 		});
 	}
 	//takes an arrow function as a parameter
-	_observe(injectedCode) {
-		//First checks to see if the script tag has been added before running code
-		const mutationObserver = new MutationObserver((entries) => {
-			entries.forEach((e) => {
-				if ((e.addedNodes[0].id = this.#scriptMount)) {
-					injectedCode(); //any code you write in function will be here
-				}
-			});
-		});
-		mutationObserver.observe(this.#observeParent, { childList: true });
+	_onLoad(injectedCode) {
+		window.addEventListener("load", injectedCode);
 	}
 	//event listener to see if element based on Id was clicked or not
 	_clicked(id, injectedCode) {
