@@ -23,7 +23,7 @@ const mounts = {
 	cardType: "hidCardType",
 	last4: "hidLast4",
 	mountError: "test2",
-	textContent: true,
+	textContent: true, //if true it will add text to the element
 };
 
 iFrame.submit(mounts);
