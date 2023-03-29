@@ -15,7 +15,7 @@ const iFrame = new HostedIFrame(
 ```
 iFrame.init();
 ```
-### OR
+### OR:
 ```
 const iFrame = new HostedIFrame(
 	"pk_rOYu",
