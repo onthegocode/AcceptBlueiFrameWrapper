@@ -1,4 +1,3 @@
-# AcceptBlueiFrameWrapper
 ## Card From:
 ### 1) const iFrame = new HostedIFrame(sourceKey, mountFormId, mountBtnId);
 
