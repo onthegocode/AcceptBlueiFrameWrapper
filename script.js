@@ -1,9 +1,3 @@
-let iFrame = new HostedIFrame(
-	"pk_rOYu" //add your own public key,
-	"my-div",
-	"btnSubmit"
-).init();
-
 const mounts = {
 	form: "frmTest",
 	token: "hidToken",
@@ -15,7 +9,6 @@ const mounts = {
 	textContent: true,
 };
 
-iFrame.submit(mounts);
 const styles = {
 	labelType: "floating",
 	card: "border-bottom: 1px solid black",
@@ -23,4 +16,8 @@ const styles = {
 	cvv2: "border-bottom: 1px solid black",
 	avsZip: "border-bottom: 1px solid black",
 };
-iFrame.styles(styles);
+
+const iFrame = new HostedIFrame("pk_rOYu", "my-div", "btnSubmit")
+	.init()
+	.styles(styles)
+	.submit(mounts);
