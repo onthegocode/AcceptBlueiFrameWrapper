@@ -2,7 +2,7 @@ let iFrame = new HostedIFrame(
 	"pk_rOYu" //add your own public key,
 	"my-div",
 	"btnSubmit"
-);
+).init();
 
 const mounts = {
 	form: "frmTest",
@@ -15,7 +15,7 @@ const mounts = {
 	textContent: true,
 };
 
-iFrame.init().submit(mounts);
+iFrame.submit(mounts);
 const styles = {
 	labelType: "floating",
 	card: "border-bottom: 1px solid black",
