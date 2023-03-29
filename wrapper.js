@@ -61,10 +61,12 @@ class HostedIFrame {
 					throw new Error(error);
 				});
 		});
+		return this;
 	}
 	//used to preset styles based on an object that will be provided with multiple items within that will change the style
 	styles(styles) {
 		this._onLoad(() => this.cardForm.setStyles(styles));
+		return this;
 	}
 
 	_errorMount(errorMount, _mainError, textContent = false) {
