@@ -11,8 +11,17 @@ const iFrame = new HostedIFrame(
 ```
 
 ### 2) iFrame.init(); -> The init() method sets everything up and allows for chaining.
+#### Returns the Class allowing to set and init() at the same time.
 ```
 iFrame.init();
+```
+### OR
+```
+const iFrame = new HostedIFrame(
+	"pk_rOYu",
+	"my-div",
+	"btnSubmit"
+).init();
 ```
 
 ### 3) iFrame.submit(object); -> The submit() method mounts to a button and returns the nonce token, expirymonth, expiryyear, cardtype, and last4 
