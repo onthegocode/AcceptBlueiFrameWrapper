@@ -29,3 +29,14 @@ const mounts = {
 
 iFrame.submit(mounts);
 ```
+
+## Styles:
+### iFrame.styles(object); -> Allows for basic styling of the form by taking an object as an argument.
+```
+const styles = {
+	labelType: "floating",
+	card: "border-bottom: 1px solid black",
+	expiryContainer: "border-bottom: 1px solid black",
+	cvv2: "border-bottom: 1px solid black"
+};
+```
