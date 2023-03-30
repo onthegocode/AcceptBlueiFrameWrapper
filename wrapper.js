@@ -18,6 +18,84 @@ const _getAndSet = (id) => {
 		el.setAttribute(_dataAttributeType, e[1]["value"]); // default
 	});
 };
+
+//Ajax Functions
+function verifyAndSave(data) {
+	$(document).ready(function () {
+		$.ajax({
+			type: "POST",
+			url: "/api/transactions/SourceVerificationAndSave", //(Will most likely be /api/Transactions/SourceVerifyAndSave)
+			contentType: "application/json",
+			data: JSON.stringify(data),
+			success: (response) => {
+				//do something
+			},
+			failure: (response) => {
+				//do something
+			},
+			error: (response) => {
+				// do something
+			},
+		});
+	});
+}
+
+function charge(data) {
+	$(document).ready(function () {
+		$("#btnOkSourcecharge").click(function () {
+			$.ajax({
+				url: "/api/transactions/Sourcecharge",
+				beforeSend: function () {
+					$("#btnCancelSourcecharge").attr("disabled", true);
+					$("#btnOkSourcecharge").attr("disabled", true);
+				},
+				contentType: "application/json",
+				data: JSON.stringify(data),
+				type: "POST",
+				success: function (data) {},
+				error: function (error) {},
+			});
+		});
+	});
+}
+
+function refund(data) {
+	$(document).ready(function () {
+		$("#btnOkRefund").click(function () {
+			$.ajax({
+				url: "/api/transactions/refund",
+				beforeSend: function () {
+					$("#btnCancelRefund").attr("disabled", true);
+					$("#btnOkRefund").attr("disabled", true);
+				},
+				contentType: "application/json",
+				data: JSON.stringify(data),
+				type: "POST",
+				success: function (data) {
+					if (!data.error) {
+						$("#txtRefundSuccess").text("Refund processed");
+						$("#txtRefundFailure").text("");
+					} else {
+						$("#txtRefundSuccess").text("");
+						$("#txtRefundFailure").text("Payment Id not found");
+					}
+					$("#btnCancelRefund").removeAttr("disabled");
+					$("#btnOkRefund").removeAttr("disabled");
+					$("#modalRefundAmount").modal("hide");
+					$("#modalRefundResult").modal("show");
+				},
+				error: function (error) {
+					$("#btnCancelRefund").removeAttr("disabled");
+					$("#btnOkRefund").removeAttr("disabled");
+					$("#txtRefundSuccess").text("");
+					$("#txtRefundFailure").text(error.responseJSON.message);
+					$("#modalRefundResult").modal("show");
+				},
+			});
+		});
+	});
+}
+
 // Class that wraps Accept.blue iFrame
 class HostedIFrame {
 	cardForm;
@@ -98,34 +176,5 @@ class HostedIFrame {
 	//event listener to see if element based on Id was clicked or not
 	_clicked(id, injectedCode) {
 		document.getElementById(id).addEventListener("click", injectedCode);
-	}
-
-	_VerifyAndSave() {
-		//Pseudo Code
-		// $.ajax({
-		// 	type: "POST",
-		// 	url: "/api/ControllerName/Method", //(Will most likely be /api/Transactions/SourceVerifyAndSave)
-		// 	contentType: "application/json",
-		// 	data: JSON.stringify("obj"),
-		// 	success: (response) => {
-		// 		//do something
-		// 	},
-		// 	failure: (response) => {
-		// 		//do something
-		// 	},
-		// 	error: (response) => {
-		// 		// do something
-		// 	},
-		// });
-	}
-
-	Charge() {
-		//code
-	}
-	Refund() {
-		//code
-	}
-	_ajaxCall() {
-		//code
 	}
 }
