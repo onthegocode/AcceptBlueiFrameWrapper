@@ -20,26 +20,6 @@ const _getAndSet = (id) => {
 };
 
 //Ajax Functions
-function verifyAndSave(data) {
-	$(document).ready(function () {
-		$.ajax({
-			type: "POST",
-			url: "/api/transactions/SourceVerificationAndSave", //(Will most likely be /api/Transactions/SourceVerifyAndSave)
-			contentType: "application/json",
-			data: JSON.stringify(data),
-			success: (response) => {
-				//do something
-			},
-			failure: (response) => {
-				//do something
-			},
-			error: (response) => {
-				// do something
-			},
-		});
-	});
-}
-
 function charge(data) {
 	$(document).ready(function () {
 		$("#btnOkSourcecharge").click(function () {
@@ -52,8 +32,8 @@ function charge(data) {
 				contentType: "application/json",
 				data: JSON.stringify(data),
 				type: "POST",
-				success: function (data) {},
-				error: function (error) {},
+				success: function (data) { },
+				error: function (error) { },
 			});
 		});
 	});
@@ -120,9 +100,15 @@ class HostedIFrame {
 		this._clicked(this.btnMount, () => {
 			const resultMount = this._resultMount; //set outside the promise to access HostedIFrame
 			const errorResult = this._errorMount; //set outside the promise to access HostedIFrame
+			const sourceVerification = this._sourceVerification;
 			this.cardForm
 				.getNonceToken()
 				.then((result) => {
+					sourceVerification({
+						Source: 'nonce-' + result.nonce,
+						Expiry_Month: result.expiryMonth,
+						Expiry_Year: result.expiryYear,
+					});
 					resultMount(
 						result,
 						submitMounts.form,
@@ -176,5 +162,25 @@ class HostedIFrame {
 	//event listener to see if element based on Id was clicked or not
 	_clicked(id, injectedCode) {
 		document.getElementById(id).addEventListener("click", injectedCode);
+	}
+
+	//Ajax function that does a source verification and returns a token to later be stored in the customers profile
+	_sourceVerification(dataObj) {
+		$(document).ready(function () {
+			$.ajax({
+				url: "/api/transactions/sourceverification",
+				contentType: "application/json",
+				data: JSON.stringify(dataObj),
+				type: "POST",
+				success: function (data) {
+					console.log("Success:");
+					console.log(data);
+				},
+				error: function (error) {
+					console.log("Error:");
+					console.log(error);
+				},
+			});
+		});
 	}
 }
