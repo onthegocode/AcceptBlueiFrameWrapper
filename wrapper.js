@@ -100,24 +100,16 @@ class HostedIFrame {
 		this._clicked(this.btnMount, () => {
 			const resultMount = this._resultMount; //set outside the promise to access HostedIFrame
 			const errorResult = this._errorMount; //set outside the promise to access HostedIFrame
-			const sourceVerification = this._sourceVerification;
+			const sourceVerification = this._sourceVerification; //set outside the promise to access HostedIFrame
 			this.cardForm
 				.getNonceToken()
 				.then((result) => {
 					sourceVerification({
-						Source: 'nonce-' + result.nonce,
+						Source: "nonce-" + result.nonce,
 						Expiry_Month: result.expiryMonth,
 						Expiry_Year: result.expiryYear,
 					});
-					resultMount(
-						result,
-						submitMounts.form,
-						submitMounts.token,
-						submitMounts.expiryMonth,
-						submitMounts.expiryYear,
-						submitMounts.cardType,
-						submitMounts.last4
-					);
+					_getAndSet({ [submitMounts.form]: { submit: true } });
 				})
 				.catch((mainError) => {
 					let error = ("" + mainError).replace("Error: ", "");
@@ -138,13 +130,14 @@ class HostedIFrame {
 	}
 
 	_resultMount(
+		obj,
 		result,
-		formMount,
-		tokenMount,
-		expiryMonthMount,
-		expiryYearMount,
-		cardTypeMount,
-		last4Mount
+		formMount = null,
+		tokenMount = null,
+		expiryMonthMount = null,
+		expiryYearMount = null,
+		cardTypeMount = null,
+		last4Mount = null
 	) {
 		_getAndSet({
 			[tokenMount]: { value: result.nonce },
