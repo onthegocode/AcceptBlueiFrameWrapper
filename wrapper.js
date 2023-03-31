@@ -163,7 +163,6 @@ class HostedIFrame {
 	_clicked(id, injectedCode) {
 		document.getElementById(id).addEventListener("click", injectedCode);
 	}
-
 	//Ajax function that does a source verification and returns a token to later be stored in the customers profile
 	_sourceVerification(dataObj) {
 		$(document).ready(function () {
