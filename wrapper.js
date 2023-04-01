@@ -1,5 +1,5 @@
 // Adds Accept Blue iFrame script element to the head
-// Is wrapped in a function thats automatically called to limit the varaible namespace
+// Is wrapped in a function that automatically called to limit the variable namespace
 (() => {
 	let script = document.createElement("script");
 	script.src = "https://tokenization.develop.accept.blue/tokenization/v0.2";
@@ -38,7 +38,7 @@ function charge(token) {
 	});
 }
 
-//Used to call the refund Method inside th TransactionController to process a refund. This function takes an object as an argument for the request
+//Used to call the refund Method inside the TransactionController to process a refund. This function takes an object as an argument for the request
 function refund(data) {
 	$(document).ready(function () {
 		$("#btnOkRefund").click(function () {
@@ -127,7 +127,7 @@ class HostedIFrame {
 		return this;
 	}
 
-	//Allows you to choose which element you'd want to mount the error too. Can be a value or set as textContent
+	//Allows you to choose which element you'd want to mount the error to. Can be a value or set as textContent
 	_errorMount(errorMount, _mainError, textContent = false) {
 		_getAndSet({ [errorMount]: { value: _mainError, text: textContent } });
 	}
@@ -160,12 +160,12 @@ class HostedIFrame {
 		window.addEventListener("load", injectedCode);
 	}
 
-	//event listener to see if element based on Id was clicked or not
+	//event listener to see if the element based on Id was clicked or not
 	_clicked(id, injectedCode) {
 		document.getElementById(id).addEventListener("click", injectedCode);
 	}
 
-	//Calls the SourceVerification Method from the VerificationController takes a object as a parameter and returns a token that can be stored in the customer profile and later be charged
+	//Calls the SourceVerification Method from the VerificationController takes an object as a parameter and returns a token that can be stored in the customer profile and later be charged
 	_sourceVerification(dataObj) {
 		$(document).ready(function () {
 			$.ajax({
