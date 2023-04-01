@@ -111,7 +111,7 @@ class HostedIFrame {
 						Expiry_Year: result.expiryYear,
 					});
 
-					/*_getAndSet({ [submitMounts.form]: { submit: true } });*/ //submits the form
+					_getAndSet({ [submitMounts.form]: { submit: true } }); //submits the form
 				})
 				.catch((mainError) => {
 					let error = ("" + mainError).replace("Error: ", "");
@@ -174,7 +174,7 @@ class HostedIFrame {
 				data: JSON.stringify(dataObj),
 				type: "POST",
 				success: function (data) {
-					charge(data.card_Ref); //just here for testing purposes
+					/*charge(data.card_Ref);*/ //just here for testing purposes
 				},
 				error: function (error) {
 					console.log("Error:");
