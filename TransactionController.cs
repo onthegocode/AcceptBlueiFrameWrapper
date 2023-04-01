@@ -7,42 +7,42 @@
 
             try
             {
-				//Creates the request that will be later converted to JSON and used to call the Accept.blue api
-				Models.AcceptBlue.SourceVerificationRequest sourceVerificationRequest = new Models.AcceptBlue.SourceVerificationRequest
-				{
-					Avs_Address = string.Empty,
-					Avs_Zip = string.Empty,
-					Name = "bob",
-					Software = string.Empty,
-					Save_Card = true,
-					Source = verificationRequest.Source,
-					Expiry_Month = verificationRequest.Expiry_Month,
-					Expiry_Year = verificationRequest.Expiry_Year,
-				};
+		//Creates the request that will be later converted to JSON and used to call the Accept.blue api
+		Models.AcceptBlue.SourceVerificationRequest sourceVerificationRequest = new Models.AcceptBlue.SourceVerificationRequest
+		{
+			Avs_Address = string.Empty,
+			Avs_Zip = string.Empty,
+			Name = "bob",
+			Software = string.Empty,
+			Save_Card = true,
+			Source = verificationRequest.Source,
+			Expiry_Month = verificationRequest.Expiry_Month,
+			Expiry_Year = verificationRequest.Expiry_Year,
+		};
 
-				Models.AcceptBlue.SourceVerificationResponse sourceVerificationResponse = AcceptBlue.SourceVerification(sourceVerificationRequest); //calls the SourceVerification Method in the AcceptBlueService
+		Models.AcceptBlue.SourceVerificationResponse sourceVerificationResponse = AcceptBlue.SourceVerification(sourceVerificationRequest); //calls the SourceVerification Method in the AcceptBlueService
 
-				//Captures the response given to us by the SourceVerification method 
-				verificationResponse = new VerificationResponse
-				{
-					Status = sourceVerificationResponse.Status,
-					Error_Message = sourceVerificationResponse.Error_Message,
-					Error_Details = sourceVerificationResponse.Error_Details,
-					Card_Type = sourceVerificationResponse.Card_Type,
-					Last_4 = sourceVerificationResponse.Last_4,
-					Card_Ref = sourceVerificationResponse.Card_Ref,
-				};
+		//Captures the response given to us by the SourceVerification method 
+		verificationResponse = new VerificationResponse
+		{
+			Status = sourceVerificationResponse.Status,
+			Error_Message = sourceVerificationResponse.Error_Message,
+			Error_Details = sourceVerificationResponse.Error_Details,
+			Card_Type = sourceVerificationResponse.Card_Type,
+			Last_4 = sourceVerificationResponse.Last_4,
+			Card_Ref = sourceVerificationResponse.Card_Ref,
+		};
 
-				// (To-do): Save the Token in the customer profile *
+		// (To-do): Save the Token in the customer profile *
 
-				await DbContext.SaveChangesAsync();
-			}
-			catch (Exception ex)
-			{
-				return BadRequest(new { status = "Error", message = ex.Message });
-			}
+		await DbContext.SaveChangesAsync();
+	}
+	catch (Exception ex)
+	{
+		return BadRequest(new { status = "Error", message = ex.Message });
+	}
 
-			return Ok(verificationResponse);
+	return Ok(verificationResponse);
         }
 
         //Source Charge
