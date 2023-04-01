@@ -1,4 +1,4 @@
-// Adds Accept BLue iFrame script element to the head
+// Adds Accept Blue iFrame script element to the head
 // Is wrapped in a function thats automatically called to limit the varaible namespace
 (() => {
 	let script = document.createElement("script");
@@ -7,8 +7,9 @@
 	document.head.appendChild(script);
 })();
 
-const _dataAttributeType = "value"; //used to easily set what data attribute you'd like. Using convention _ to indicate its a variable not to be used
-//Used to Get an element based on id and Set a method to it ex: setAttribute, submit, and textContent - setAttribute is default
+const _dataAttributeType = "value"; //Used to easily set the data attribute. Using convention _ to indicate its a variable not to be used
+
+//Used to Get an element based on id and Set a method to it ex: setAttribute, submit, and textContent - setAttribute is always set
 const _getAndSet = (id) => {
 	Object.entries(id).forEach((e) => {
 		const el = document.getElementById(e[0]);
@@ -19,26 +20,25 @@ const _getAndSet = (id) => {
 	});
 };
 
-//Ajax Functions
-function charge(data) {
+//Used to call the SourceCharge Method inside the TransactionController. This function would likely have to be wrapped in a click event to know when to go off. Takes a token as an argument
+function charge(token) {
 	$(document).ready(function () {
-		$("#btnOkSourcecharge").click(function () {
-			$.ajax({
-				url: "/api/transactions/Sourcecharge",
-				beforeSend: function () {
-					$("#btnCancelSourcecharge").attr("disabled", true);
-					$("#btnOkSourcecharge").attr("disabled", true);
-				},
-				contentType: "application/json",
-				data: JSON.stringify(data),
-				type: "POST",
-				success: function (data) { },
-				error: function (error) { },
-			});
+		$.ajax({
+			url: "/api/transactions/sourcecharge",
+			contentType: "application/json",
+			data: JSON.stringify({ Source: token }),
+			type: "POST",
+			success: function (data) {
+				console.log(data);
+			},
+			error: function (error) {
+				console.log(error);
+			},
 		});
 	});
 }
 
+//Used to call the refund Method inside th TransactionController to process a refund. This function takes an object as an argument for the request
 function refund(data) {
 	$(document).ready(function () {
 		$("#btnOkRefund").click(function () {
@@ -98,18 +98,20 @@ class HostedIFrame {
 	//Takes an object as the argument
 	submit(submitMounts) {
 		this._clicked(this.btnMount, () => {
-			const resultMount = this._resultMount; //set outside the promise to access HostedIFrame
+			// const resultMount = this._resultMount; //set outside the promise to access HostedIFrame
 			const errorResult = this._errorMount; //set outside the promise to access HostedIFrame
 			const sourceVerification = this._sourceVerification; //set outside the promise to access HostedIFrame
 			this.cardForm
 				.getNonceToken()
 				.then((result) => {
+					//calls the api to verify nonce token and returns token
 					sourceVerification({
 						Source: "nonce-" + result.nonce,
 						Expiry_Month: result.expiryMonth,
 						Expiry_Year: result.expiryYear,
 					});
-					_getAndSet({ [submitMounts.form]: { submit: true } });
+
+					_getAndSet({ [submitMounts.form]: { submit: true } }); //submits the form
 				})
 				.catch((mainError) => {
 					let error = ("" + mainError).replace("Error: ", "");
@@ -125,11 +127,13 @@ class HostedIFrame {
 		return this;
 	}
 
+	//Allows you to choose which element you'd want to mount the error too. Can be a value or set as textContent
 	_errorMount(errorMount, _mainError, textContent = false) {
 		_getAndSet({ [errorMount]: { value: _mainError, text: textContent } });
 	}
 
-	_resultMount(
+	//The result mount is used to mount the nonce token, expiry dates, last 4, and card type. But may not have a function in the grand scheme of things
+	/*_resultMount(
 		obj,
 		result,
 		formMount = null,
@@ -147,16 +151,21 @@ class HostedIFrame {
 			[last4Mount]: { value: result.last4 },
 			[formMount]: { submit: true },
 		});
-	}
-	//takes an arrow function as a parameter
+	}*/
+
+
+	//Checks to see if the page was loaded before running a function
+	//takes a function as a parameter
 	_onLoad(injectedCode) {
 		window.addEventListener("load", injectedCode);
 	}
+
 	//event listener to see if element based on Id was clicked or not
 	_clicked(id, injectedCode) {
 		document.getElementById(id).addEventListener("click", injectedCode);
 	}
-	//Ajax function that does a source verification and returns a token to later be stored in the customers profile
+
+	//Calls the SourceVerification Method from the VerificationController takes a object as a parameter and returns a token that can be stored in the customer profile and later be charged
 	_sourceVerification(dataObj) {
 		$(document).ready(function () {
 			$.ajax({
@@ -165,8 +174,7 @@ class HostedIFrame {
 				data: JSON.stringify(dataObj),
 				type: "POST",
 				success: function (data) {
-					console.log("Success:");
-					console.log(data);
+					/*charge(data.card_Ref);*/ //just here for testing purposes
 				},
 				error: function (error) {
 					console.log("Error:");
