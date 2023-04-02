@@ -12,7 +12,7 @@ You can use the library to create an iframe where none of the raw card data is o
 
 ### 2) Initialize the form
 
-####a)
+#### a)
 
 ```
 const iFrame = new HostedIFrame(sourceKey, mountFormId, mountBtnId);
@@ -26,5 +26,5 @@ const iFrame = new HostedIFrame(
 	"btnSubmit"
 );
 ```
-####b)
+#### b)
 
