@@ -48,3 +48,38 @@ iFrame.submit(mounts);
 ```
 
 ## Styling:
+Set styles for the elements inside the card form/iframe, by using the styles() method. The styles method takes an object as a parameter.
+
+```
+const styles = {
+  labelType: "floating",
+  card: "border-bottom: 1px solid black",
+  expiryContainer: "border-bottom: 1px solid black",
+  cvv2: "border-bottom: 1px solid black",
+  avsZip: "border-bottom: 1px solid black",
+};
+
+iFrame.styles(styles);
+```
+
+## Real World Example:
+```
+const mounts = {
+  form: "formMount",
+  mountError: "errorMount",
+  textContent: true,
+};
+
+const styles = {
+  labelType: "floating",
+  card: "border-bottom: 1px solid black",
+  expiryContainer: "border-bottom: 1px solid black",
+  cvv2: "border-bottom: 1px solid black",
+  avsZip: "border-bottom: 1px solid black",
+};
+
+new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount", "btnSubmit")
+  .init()
+  .styles(styles)
+  .submit(mounts);
+```
