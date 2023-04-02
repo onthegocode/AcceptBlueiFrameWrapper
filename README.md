@@ -32,7 +32,7 @@ const iFrame = new HostedIFrame(
 init(): Initializes the form
 
 ```
-iFrame.init()
+iFrame.init();
 ```
 
 submit(): Takes an object that allows the user to select the form, in which they want to submit and mount where the error should show if the user wants. Also allowing for error to be shown as text by setting textContent to true.
@@ -44,7 +44,7 @@ const mounts = {
   textContent: true,
 };
 
-iFrame.submit(mounts)
+iFrame.submit(mounts);
 ```
 
 
