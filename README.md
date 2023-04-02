@@ -47,4 +47,4 @@ const mounts = {
 iFrame.submit(mounts);
 ```
 
-## 
+## Styling:
