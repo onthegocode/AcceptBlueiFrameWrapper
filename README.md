@@ -22,9 +22,9 @@ const iFrame = new HostedIFrame(sourceKey, mountFormId, mountBtnId);
 Real World Example:
 ```
 const iFrame = new HostedIFrame(
-	"pk_rOYu",
-	"iframe",
-	"btnSubmit"
+   "pk_rOYu",
+   "iframe",
+   "btnSubmit"
 );
 ```
 #### b) Init and Submit:
@@ -39,9 +39,9 @@ submit(): Takes an object that allows the user to select the form, in which they
 
 ```
 const mounts = {
-  form: "formMount",
-  mountError: "errorMount",
-  textContent: true,
+   form: "formMount",
+   mountError: "errorMount",
+   textContent: true,
 };
 
 iFrame.submit(mounts);
@@ -52,11 +52,11 @@ Set styles for the elements inside the card form/iframe, by using the styles() m
 
 ```
 const styles = {
-  labelType: "floating",
-  card: "border-bottom: 1px solid black",
-  expiryContainer: "border-bottom: 1px solid black",
-  cvv2: "border-bottom: 1px solid black",
-  avsZip: "border-bottom: 1px solid black",
+   labelType: "floating",
+   card: "border-bottom: 1px solid black",
+   expiryContainer: "border-bottom: 1px solid black",
+   cvv2: "border-bottom: 1px solid black",
+   avsZip: "border-bottom: 1px solid black",
 };
 
 iFrame.styles(styles);
@@ -65,21 +65,21 @@ iFrame.styles(styles);
 ## Real World Example:
 ```
 const mounts = {
-  form: "formMount",
-  mountError: "errorMount",
-  textContent: true,
+   form: "formMount",
+   mountError: "errorMount",
+   textContent: true,
 };
 
 const styles = {
-  labelType: "floating",
-  card: "border-bottom: 1px solid black",
-  expiryContainer: "border-bottom: 1px solid black",
-  cvv2: "border-bottom: 1px solid black",
-  avsZip: "border-bottom: 1px solid black",
+   labelType: "floating",
+   card: "border-bottom: 1px solid black",
+   expiryContainer: "border-bottom: 1px solid black",
+   cvv2: "border-bottom: 1px solid black",
+   avsZip: "border-bottom: 1px solid black",
 };
 
 new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount", "btnSubmit")
-  .init()
-  .styles(styles)
-  .submit(mounts);
+   .init()
+   .styles(styles)
+   .submit(mounts);
 ```
