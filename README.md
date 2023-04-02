@@ -3,9 +3,18 @@ The Card Form library allows your app to process and save credit card informatio
 
 You can use the library to create an iframe where none of the raw card data is on your app, all hosted on a gateway server.
 
-### 1) const iFrame = new HostedIFrame(sourceKey, mountFormId, mountBtnId);
+### 1) Add the library to your page
+```
+<script src="/wrapper.js"></script>
+```
 
-Example:
+### 2) Initialize the form
+
+```
+const iFrame = new HostedIFrame(sourceKey, mountFormId, mountBtnId);
+```
+
+Real World Example:
 ```
 const iFrame = new HostedIFrame(
 	"pk_rOYu",
