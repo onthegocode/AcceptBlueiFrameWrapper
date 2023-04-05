@@ -34,7 +34,8 @@ const dataObj = {
 ```
 
 
-#### Example Submit: *Doesn't have click event
+#### Example Submit: 
+Without click event
 ```
 iFrame.submit(dataObj).then(response => {
     console.log(response);
