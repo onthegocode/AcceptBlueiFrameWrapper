@@ -61,11 +61,6 @@ iFrame.submit(dataObj).then(response => {
 }
 ```
 
-
-## Style:
-
-
-
 ## Charge:
 This function allows you to charge token that you get from the submit() method. It takes an object as a parameter where the Amount and Source are required. But you have other options such as Avs_Address, Avs_Zip, CVV2, Expiry_Month, Expiry_Year, and Software (These options are optional).
 
