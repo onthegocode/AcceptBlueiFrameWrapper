@@ -67,7 +67,64 @@ iFrame.submit(dataObj).then(response => {
 
 
 ## Charge:
-
-### 1)
+This function allows you to charge token that you get from the submit() method. It takes an object as a parameter where the Amount and Source are required. But you have other options such as Avs_Address, Avs_Zip, CVV2, Expiry_Month, Expiry_Year, and Software (These options are optional).
 
 ## Sample Code:
+```
+<div style="display: flex; flex-direction: column; gap: 6rem;">
+	<form id="formMount">
+		<div id="iframeMount"></div>
+		<p id="errorMount"></p>
+		<button type="button" id="btnSubmit">Submit</button>
+	</form>
+
+	<form id="chargeForm">
+		<label style="display:block;" for="amount">Amount:</label>
+		<input id="amount" name="amount" type="number" required />
+		
+		<button type="button" id="btn2">Charge Card</button>
+	</form>
+</div>
+
+<script type="text/javascript">
+    let token;
+    const styles = {
+        labelType: "floating",
+        card: "border-bottom: 1px solid black",
+        expiryContainer: "border-bottom: 1px solid black",
+        cvv2: "border-bottom: 1px solid black",
+        avsZip: "border-bottom: 1px solid black",
+    };
+
+    const dataObj = {
+        Name: "Sam",
+        Avs_Address: "78 Boston Court Racine, WI",
+        Avs_Zip: "53402",
+        Software: "Example Software",
+    };
+
+    const iFrame = new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount").styles(styles);
+
+    $('#btnSubmit').click(() => {
+        iFrame.submit(dataObj).then(response => {
+            token = response.token;
+            console.log(response);
+        }).catch(response => {
+            throw new Error(("" + response).replace("Error: ", ""));
+        })
+    });
+
+    $("#btn2").click(() => {
+        let chargeObj = {
+            Source: token,
+            Amount: parseFloat($("#amount").val()),
+        };
+
+        charge(chargeObj).then(response => {
+            console.log(response);
+        }).catch(msg => {
+            throw new Error(("" + msg).replace("Error: ", ""));
+        });
+    });
+</script>
+```
