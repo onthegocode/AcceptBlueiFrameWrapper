@@ -88,10 +88,10 @@ class HostedIFrame {
 
 	//Submits and mounts the result of the card form. Returns a Json response that contains the nonce token, expirymonth, expiryyear, and cardtype and last4
 	//Takes an object as the argument
+
 	submit(data = {}) {
 		var self = this;
-		return new Promise(function (resolve, reject) {
-			self._clicked(self.btnMount, () => {
+			return new Promise(function (resolve, reject) {
 				self.cardForm
 					.getNonceToken()
 					.then((result) => {
@@ -123,7 +123,6 @@ class HostedIFrame {
 						reject(mainError); //returns the error
 					});
 			});
-		});
 	}
 	//used to preset styles based on an object that will be provided with multiple items within that will change the style
 	styles(styles) {
@@ -135,10 +134,5 @@ class HostedIFrame {
 	//takes a function as a parameter
 	_onLoad(injectedCode) {
 		window.addEventListener("load", injectedCode);
-	}
-
-	//event listener to see if the element based on Id was clicked or not
-	_clicked(id, injectedCode) {
-		document.getElementById(id).addEventListener("click", injectedCode);
 	}
 }
