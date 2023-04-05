@@ -39,5 +39,4 @@ $("#btn2").click(()=>{
 	}).catch(msg=>{
 		console.log(msg);
 	});
-
 });
