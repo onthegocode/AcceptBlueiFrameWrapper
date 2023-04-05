@@ -28,44 +28,6 @@ function charge(object) {
 	});
 }
 
-//Used to call the refund Method inside the TransactionController to process a refund. This function takes an object as an argument for the request
-function refund(data) {
-	$(document).ready(function () {
-		$("#btnOkRefund").click(function () {
-			$.ajax({
-				url: "/api/transactions/refund",
-				beforeSend: function () {
-					$("#btnCancelRefund").attr("disabled", true);
-					$("#btnOkRefund").attr("disabled", true);
-				},
-				contentType: "application/json",
-				data: JSON.stringify(data),
-				type: "POST",
-				success: function (data) {
-					if (!data.error) {
-						$("#txtRefundSuccess").text("Refund processed");
-						$("#txtRefundFailure").text("");
-					} else {
-						$("#txtRefundSuccess").text("");
-						$("#txtRefundFailure").text("Payment Id not found");
-					}
-					$("#btnCancelRefund").removeAttr("disabled");
-					$("#btnOkRefund").removeAttr("disabled");
-					$("#modalRefundAmount").modal("hide");
-					$("#modalRefundResult").modal("show");
-				},
-				error: function (error) {
-					$("#btnCancelRefund").removeAttr("disabled");
-					$("#btnOkRefund").removeAttr("disabled");
-					$("#txtRefundSuccess").text("");
-					$("#txtRefundFailure").text(error.responseJSON.message);
-					$("#modalRefundResult").modal("show");
-				},
-			});
-		});
-	});
-}
-
 // Class that wraps Accept.blue iFrame
 class HostedIFrame {
 	cardForm; //used to store the form
