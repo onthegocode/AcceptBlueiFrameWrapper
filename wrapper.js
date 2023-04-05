@@ -73,10 +73,9 @@ function refund(data) {
 class HostedIFrame {
 	cardForm; //used to store the form
 
-	constructor(tokenSourceKey, iframeMount, btnMount) {
+	constructor(tokenSourceKey, iframeMount) {
 		this.tokenSourceKey = tokenSourceKey;
 		this.iframeMount = `#${iframeMount}`;
-		this.btnMount = `${btnMount}`;
 
 		//Auto Initiate
 		this._onLoad(() => {
