@@ -22,13 +22,11 @@ const iFrame = new HostedIFrame("pk_rIY", "iframeMount");
 On button clicked the submit method will be called returning a promise that you can capture the JSON response using .then() and catch any errors using .catch(). 
 
 ```
-$('#btnSubmit').click(() => {
-  iFrame.submit(dataObj).then(response => {
-      token = response.token;
-      console.log(response);
-  }).catch(response => {
-      throw new Error(("" + response).replace("Error: ", ""));
-  })
+iFrame.submit(dataObj).then(response => {
+    token = response.token;
+    console.log(response);
+}).catch(response => {
+    throw new Error(("" + response).replace("Error: ", ""));
 });
 ```
 Json Verification And Save Response Example:
