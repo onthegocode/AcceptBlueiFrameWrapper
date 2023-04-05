@@ -70,6 +70,9 @@ iFrame.submit(dataObj).then(response => {
 This function allows you to charge token that you get from the submit() method. It takes an object as a parameter where the Amount and Source are required. But you have other options such as Avs_Address, Avs_Zip, CVV2, Expiry_Month, Expiry_Year, and Software (These options are optional).
 
 ## Sample Code:
+In this example the verifying and saving of the card as a token is done also the charging of the token is done as well. For this example to work you must first submit the card form and once a JSON response is recieved ('it will show in the console'), input your amount and charge the token, a response will be sent back ('it will show in the console').
+Please provide your own Public Source Key.
+
 ```
 <div style="display: flex; flex-direction: column; gap: 6rem;">
 	<form id="formMount">
