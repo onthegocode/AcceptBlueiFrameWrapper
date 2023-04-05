@@ -34,18 +34,18 @@ $('#btnSubmit').click(() => {
 Json Verification And Save Response Example:
 ```
 {
-status: "Approved",
-token: "DNJMJOZMRAUG2G6K",
-card_Type: "Visa",
-last_4: "1118",
-expiry_Month: 12,
-expiry_Year: 2026,
-name: "Sam",
-avs_Address:"78 Boston Court Racine, WI",
-avs_Zip : "53402",
-software: "Example Software",
-error_Details: null,
-error_Message: null
+  status: "Approved",
+  token: "DNJMJOZMRAUG2G6K",
+  card_Type: "Visa",
+  last_4: "1118",
+  expiry_Month: 12,
+  expiry_Year: 2026,
+  name: "Sam",
+  avs_Address:"78 Boston Court Racine, WI",
+  avs_Zip : "53402",
+  software: "Example Software",
+  error_Details: null,
+  error_Message: null
 }
 ```
 
