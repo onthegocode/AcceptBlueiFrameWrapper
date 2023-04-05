@@ -29,7 +29,7 @@ iFrame.submit(dataObj).then(response => {
     throw new Error(("" + response).replace("Error: ", ""));
 });
 ```
-Json Verification And Save Response Example:
+Json Response Example:
 ```
 {
   status: "Approved",
