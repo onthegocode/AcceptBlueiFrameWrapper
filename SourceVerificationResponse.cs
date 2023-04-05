@@ -32,5 +32,5 @@ namespace SO_Virtual_Terminal.Models.AcceptBlue
         public string Last_4 { get; set; }
         [JsonPropertyName("card_ref")]
         public string Card_Ref { get; set; }
-    }
+	}
 }
