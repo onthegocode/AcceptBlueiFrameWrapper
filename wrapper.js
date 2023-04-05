@@ -21,19 +21,21 @@ const _getAndSet = (id) => {
 };
 
 //Used to call the SourceCharge Method inside the TransactionController. This function would likely have to be wrapped in a click event to know when to go off. Takes a token as an argument
-function charge(token) {
-	$(document).ready(function () {
-		$.ajax({
-			url: "/api/transactions/sourcecharge",
-			contentType: "application/json",
-			data: JSON.stringify({ Source: token }),
-			type: "POST",
-			success: function (data) {
-				console.log(data);
-			},
-			error: function (error) {
-				console.log(error);
-			},
+function charge(object) {
+	return new Promise(function (resolve, reject) {
+		$(document).ready(function () {
+			$.ajax({
+				url: "/api/transactions/sourcecharge",
+				contentType: "application/json",
+				data: JSON.stringify(object),
+				type: "POST",
+				success: function (data) {
+					resolve(data);
+				},
+				error: function (error) {
+					reject(error);
+				},
+			});
 		});
 	});
 }
@@ -83,76 +85,68 @@ class HostedIFrame {
 		this.tokenSourceKey = tokenSourceKey;
 		this.iframeMount = `#${iframeMount}`;
 		this.btnMount = `${btnMount}`;
-	}
-
-	init() {
 		this._onLoad(() => {
 			this.cardForm = new window.HostedTokenization(this.tokenSourceKey)
 				.create("card-form")
 				.mount(this.iframeMount);
 		});
+	}
+
+	/*init() {
+		
 
 		return this;
-	}
+	}*/
 	//Submits and mounts the result of the card form. Returns the nonce token, expirymonth, expiryyear, and cardtype and last4
 	//Takes an object as the argument
 	submit(submitMounts) {
-		this._clicked(this.btnMount, () => {
-			// const resultMount = this._resultMount; //set outside the promise to access HostedIFrame
-			const errorResult = this._errorMount; //set outside the promise to access HostedIFrame
-			const sourceVerification = this._sourceVerification; //set outside the promise to access HostedIFrame
-			this.cardForm
-				.getNonceToken()
-				.then((result) => {
-					//calls the api to verify nonce token and returns token
-					sourceVerification({
-						Source: "nonce-" + result.nonce,
-						Expiry_Month: result.expiryMonth,
-						Expiry_Year: result.expiryYear,
-					});
+		var main = this;
+		return new Promise(function (resolve, reject) {
+			main._clicked(main.btnMount, () => {
+				/*// const resultMount = this._resultMount; //set outside the promise to access HostedIFrame
+				const errorResult = main._errorMount; //set outside the promise to access HostedIFrame
+				const sourceVerification = main._sourceVerification; //set outside the promise to access HostedIFrame*/
+				main.cardForm
+					.getNonceToken()
+					.then((result) => {
+						//calls the api to verify nonce token and returns token
+						const newObj = {
+							Name: submitMounts.Name ? submitMounts.Name : "",
+							Avs_Address: submitMounts.Avs_Address ? submitMounts.Avs_Address : "",
+							Avs_Zip: submitMounts.Avs_Zip ? submitMounts.Avs_Zip : "",
+							Software: submitMounts.Software ? submitMounts.Software : "Hi :D",
+							Source: "nonce-" + result.nonce,
+							Expiry_Month: result.expiryMonth,
+							Expiry_Year: result.expiryYear,
 
-					_getAndSet({ [submitMounts.form]: { submit: true } }); //submits the form
-				})
-				.catch((mainError) => {
-					let error = ("" + mainError).replace("Error: ", "");
-					errorResult(submitMounts.mountError, error, submitMounts.textContent);
-					throw new Error(error);
-				});
+						}
+
+						$.ajax({
+							url: "/api/transactions/sourceverification",
+							contentType: "application/json",
+							data: JSON.stringify(newObj),
+							type: "POST",
+							success: function (data) {
+								resolve(data); //returns the object data
+							},
+							error: function (error) {
+								reject(error); //returns the error
+							},
+						});
+
+						/*_getAndSet({ [submitMounts.form]: { submit: true } });*/ //submits the form
+					})
+					.catch((mainError) => {
+						reject(mainError); //returns the error 
+					});
+			});
 		});
-		return this;
 	}
 	//used to preset styles based on an object that will be provided with multiple items within that will change the style
 	styles(styles) {
 		this._onLoad(() => this.cardForm.setStyles(styles));
 		return this;
 	}
-
-	//Allows you to choose which element you'd want to mount the error to. Can be a value or set as textContent
-	_errorMount(errorMount, _mainError, textContent = false) {
-		_getAndSet({ [errorMount]: { value: _mainError, text: textContent } });
-	}
-
-	//The result mount is used to mount the nonce token, expiry dates, last 4, and card type. But may not have a function in the grand scheme of things
-	/*_resultMount(
-		obj,
-		result,
-		formMount = null,
-		tokenMount = null,
-		expiryMonthMount = null,
-		expiryYearMount = null,
-		cardTypeMount = null,
-		last4Mount = null
-	) {
-		_getAndSet({
-			[tokenMount]: { value: result.nonce },
-			[expiryMonthMount]: { value: result.expiryMonth },
-			[expiryYearMount]: { value: result.expiryYear },
-			[cardTypeMount]: { value: result.cardType },
-			[last4Mount]: { value: result.last4 },
-			[formMount]: { submit: true },
-		});
-	}*/
-
 
 	//Checks to see if the page was loaded before running a function
 	//takes a function as a parameter
@@ -163,24 +157,5 @@ class HostedIFrame {
 	//event listener to see if the element based on Id was clicked or not
 	_clicked(id, injectedCode) {
 		document.getElementById(id).addEventListener("click", injectedCode);
-	}
-
-	//Calls the SourceVerification Method from the VerificationController takes an object as a parameter and returns a token that can be stored in the customer profile and later be charged
-	_sourceVerification(dataObj) {
-		$(document).ready(function () {
-			$.ajax({
-				url: "/api/transactions/sourceverification",
-				contentType: "application/json",
-				data: JSON.stringify(dataObj),
-				type: "POST",
-				success: function (data) {
-					/*charge(data.card_Ref);*/ //just here for testing purposes
-				},
-				error: function (error) {
-					console.log("Error:");
-					console.log(error);
-				},
-			});
-		});
 	}
 }
