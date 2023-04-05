@@ -10,7 +10,7 @@ namespace SO_Virtual_Terminal.Models.AcceptBlue
 	public class SourceChargeRequest
 	{
 		[JsonPropertyName("amount")]
-		public float Amount { get; set; }
+		public decimal Amount { get; set; }
 		[JsonPropertyName("name")]
 		public string Name { get; set; }
 		[JsonPropertyName("ignore_duplicates")]
@@ -21,13 +21,10 @@ namespace SO_Virtual_Terminal.Models.AcceptBlue
 		public string Avs_Address { get; set; }
 		[JsonPropertyName("avs_zip")]
 		public string Avs_Zip { get; set; }
-		/// <summary>Used to preset source charge credit card expiry month by 1 month ahead of the current. Example: 10 => 11</summary>
 		[JsonPropertyName("expiry_month")]
-		public int Expiry_Month { get; set; } = DateTime.Now.Month + 1;
-		/// <summary>Used to preset source charge credit card expiry year by 1 year ahead of the current. Example: 2022 => 2023</summary>
+		public int Expiry_Month { get; set; }
 		[JsonPropertyName("expiry_year")]
-		public int Expiry_Year { get; set; } = DateTime.Now.Year + 1;
-		/// <summary>Used to preset source charge credit cvv as its not needed for a source charge using a token</summary>
+		public int Expiry_Year { get; set; }
 		[JsonPropertyName("cvv2")]
 		public string CVV2 { get; set; } = "123";
 		[JsonPropertyName("source")]
