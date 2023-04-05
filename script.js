@@ -15,15 +15,16 @@ const dataObj = {
 	Software: "Example Software",
 };
 
-const iFrame = new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount", "btnSubmit").styles(styles)
+const iFrame = new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount").styles(styles)
 
+$('#btnSubmit').click(() => {
 iFrame.submit(dataObj).then(msg => {
 	token = msg.token;
 	console.log(msg);
-}).catch(msg => {
-	console.log(msg);
-	throw new Error(("" + msg).replace("Error: ", ""));
+}).catch(msg => {throw new Error(("" + msg).replace("Error: ", ""));})
+
 });
+
 
 $("#btn2").click(()=>{
 	let newObj = {
@@ -33,10 +34,7 @@ $("#btn2").click(()=>{
 
 	charge(newObj).then(msg => {
 		console.log(msg);
-		setTimeout(()=> {
-			$('#formMount').submit();
-		}, 3000)
 	}).catch(msg=>{
-		console.log(msg);
+		throw new Error(("" + msg).replace("Error: ", ""));
 	});
 });
