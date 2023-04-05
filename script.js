@@ -27,13 +27,11 @@ $('#btnSubmit').click(() => {
 
 });
 
-
 $("#btn2").click(() => {
     let newObj = {
         Source: token,
         Amount: parseFloat($("#amount").val()),
     };
-
     charge(newObj).then(msg => {
         console.log(msg);
     }).catch(msg => {
