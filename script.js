@@ -1,8 +1,4 @@
-const mounts = {
-	form: "frmTest",
-	mountError: "test2",
-	textContent: true,
-};
+let token;
 
 const styles = {
 	labelType: "floating",
@@ -12,7 +8,36 @@ const styles = {
 	avsZip: "border-bottom: 1px solid black",
 };
 
-new HostedIFrame("pk_rOYu", "my-div", "btnSubmit")
-	.init()
-	.styles(styles)
-	.submit(mounts);
+const dataObj = {
+	Name: "Sam",
+	Avs_Address: "78 Boston Court Racine, WI",
+	Avs_Zip: "53402",
+	Software: "Example Software",
+};
+
+const iFrame = new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount", "btnSubmit").styles(styles)
+
+iFrame.submit(dataObj).then(msg => {
+	token = msg.token;
+	console.log(msg);
+}).catch(msg => {
+	console.log(msg);
+	throw new Error(("" + msg).replace("Error: ", ""));
+});
+
+$("#btn2").click(()=>{
+	let newObj = {
+		Source: token,
+		Amount: parseFloat($("#amount").val()),
+	};
+
+	charge(newObj).then(msg => {
+		console.log(msg);
+		setTimeout(()=> {
+			$('#formMount').submit();
+		}, 3000)
+	}).catch(msg=>{
+		console.log(msg);
+	});
+
+});
