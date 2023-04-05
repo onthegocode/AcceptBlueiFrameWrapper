@@ -7,9 +7,6 @@
 	document.head.appendChild(script);
 })();
 
-const _dataAttributeType = "value"; //Used to easily set the data attribute. Using convention _ to indicate its a variable not to be used
-
-
 //Used to call the SourceCharge Method inside the TransactionController. This function would likely have to be wrapped in a click event to know when to go off. Takes a token as an argument
 function charge(object) {
 	//returns a promise to allow for the user to capture the Json response
