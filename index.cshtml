@@ -1,6 +1,13 @@
-<form id="frmTest">
-	<div id="my-div"></div>
-	<p id="test2"></p>
-</form>
+<div style="display: flex; flex-direction: column; gap: 6rem;">
+	<form id="formMount">
+		<div id="iframeMount"></div>
+		<p id="errorMount"></p>
+		<button type="button" id="btnSubmit">Submit</button>
+	</form>
 
-<button id="btnSubmit">Click</button>
+	<form id="chargeForm">
+		<label style="display:block;" for="amount">Amount:</label>
+		<input id="amount" name="amount" type="number" required />
+		<button type="button" id="btn2">Charge Card</button>
+	</form>
+</div>
