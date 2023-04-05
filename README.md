@@ -103,7 +103,7 @@ This function allows you to charge token that you get from the submit() method. 
         Software: "Example Software",
     };
 
-    const iFrame = new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount").styles(styles);
+    const iFrame = new HostedIFrame("pk_rIY", "iframeMount").styles(styles);
 
     $('#btnSubmit').click(() => {
         iFrame.submit(dataObj).then(response => {
