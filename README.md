@@ -19,7 +19,7 @@ const iFrame = new HostedIFrame("pk_rIY", "iframeMount");
 
 ### 3) Submit and recieve reponse
 
-On button clicked the submit method will be called returning a promise that you can capture the JSON response using .then() and catch any errors using .catch(). 
+The submit method will be called returning a promise that you can capture the JSON response using .then() and catch any errors using .catch(). A Token will be returned in the JSON response allowing you to charge that token later on. Make sure to wrap the .submit() method inside a click event. 
 
 ```
 iFrame.submit(dataObj).then(response => {
