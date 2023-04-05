@@ -72,6 +72,7 @@ This function allows you to charge token that you get from the submit() method. 
 The Charge function needs to be wrapped in some kind of click or submit event.
 
 ### Object Example: 
+The Amount must be an int or float. String will cause error.
 ```
 let chargeObj = {
    Source: token,
