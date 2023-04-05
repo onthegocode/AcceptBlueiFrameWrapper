@@ -79,6 +79,7 @@ let chargeObj = {
 };
 ```
 ### Charge Example:
+Without click event
 ```
 charge(chargeObj).then(response => {
    console.log(response);
