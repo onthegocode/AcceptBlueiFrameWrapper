@@ -23,18 +23,20 @@ The submit method will be called returning a promise that you can capture the JS
 
 It takes an object as a parameter but is only needed if you'd like Name, Avs_Address, Avs_Zip, and Software to be returned to you in JSON response.
 
+#### Example Object:
 ```
-let token;
-
 const dataObj = {
     Name: "Sam",
     Avs_Address: "78 Boston Court Racine, WI",
     Avs_Zip: "53402",
     Software: "Example Software",
 };
+```
 
+
+#### Example Submit:
+```
 iFrame.submit(dataObj).then(response => {
-    token = response.token;
     console.log(response);
 }).catch(response => {
     throw new Error(("" + response).replace("Error: ", ""));
