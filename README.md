@@ -17,11 +17,22 @@ You can use the library to create an iframe where none of the raw card data is o
 const iFrame = new HostedIFrame("pk_rIY", "iframeMount");
 ```
 
-### 3) Submit and recieve reponse
+### 3) Submit and recieve reponse -> Token
 
 The submit method will be called returning a promise that you can capture the JSON response using .then() and catch any errors using .catch(). A Token will be returned in the JSON response allowing you to charge that token later on. Make sure to wrap the .submit() method inside a click event. 
 
+It takes an object as a parameter but is only needed if you'd like Name, Avs_Address, Avs_Zip, and Software to be returned to you in JSON response.
+
 ```
+let token;
+
+const dataObj = {
+    Name: "Sam",
+    Avs_Address: "78 Boston Court Racine, WI",
+    Avs_Zip: "53402",
+    Software: "Example Software",
+};
+
 iFrame.submit(dataObj).then(response => {
     token = response.token;
     console.log(response);
@@ -52,6 +63,8 @@ Json Response Example:
 
 
 
-## Charge
+## Charge:
+
+### 1)
 
 ## Sample Code:
