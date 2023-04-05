@@ -15,7 +15,7 @@ const dataObj = {
     Software: "Example Software",
 };
 
-const iFrame = new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount").styles(styles)
+const iFrame = new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount").styles(styles);
 
 $('#btnSubmit').click(() => {
     iFrame.submit(dataObj).then(msg => {
