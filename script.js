@@ -24,7 +24,6 @@ $('#btnSubmit').click(() => {
     }).catch(msg => {
         throw new Error(("" + msg).replace("Error: ", ""));
     })
-
 });
 
 $("#btn2").click(() => {
