@@ -90,7 +90,7 @@ charge(chargeObj).then(response => {
 ```
 
 ## Sample Code:
-In this example the verifying and saving of the card as a token is done also the charging of the token is done as well. For this example to work you must first submit the card form and once a JSON response is recieved ('it will show in the console'), input your amount and charge the token, a response will be sent back ('it will show in the console').
+In this example the verifying and saving of the card as a token is done also the charging of the token is done as well. For this example to work you must first submit the card form and once a JSON response is recieved ('it will show in the console'), input your amount and charge the token, a response will be sent back ('it will show in the console'). In this example its a click event for the charge, but would recommend a submit event to prevent double charging a token.
 
 Please provide your own Public Source Key.
 
