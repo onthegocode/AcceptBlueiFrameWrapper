@@ -143,7 +143,7 @@ public class VerificationRequest
         public int Expiry_Year { get; set; }
         public string Software { get; set; }
 	public string CVV2 { get; set; }
-	public string Source { get; set; }
+	public string Token { get; set; }
     }
     public class ChargeResponse
     {
