@@ -18,22 +18,23 @@ const dataObj = {
 const iFrame = new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount").styles(styles);
 
 $('#btnSubmit').click(() => {
-    iFrame.submit(dataObj).then(msg => {
-        token = msg.token;
-        console.log(msg);
-    }).catch(msg => {
-        throw new Error(("" + msg).replace("Error: ", ""));
+    iFrame.submit(dataObj).then(response => {
+        token = response.token;
+        console.log(response);
+    }).catch(response => {
+        throw new Error(("" + response).replace("Error: ", ""));
     })
 });
 
 $("#btn2").click(() => {
-    let newObj = {
-        Source: token,
+    let chargeObj = {
+        Token: token,
         Amount: parseFloat($("#amount").val()),
     };
-    charge(newObj).then(msg => {
-        console.log(msg);
-    }).catch(msg => {
-        throw new Error(("" + msg).replace("Error: ", ""));
+
+    charge(chargeObj).then(response => {
+        console.log(response);
+    }).catch(response => {
+        throw new Error(("" + response).replace("Error: ", ""));
     });
 });
