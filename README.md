@@ -17,7 +17,7 @@ You can use the library to create an iframe where none of the raw card data is o
 const iFrame = new HostedIFrame("pk_rIY", "iframeMount");
 ```
 
-### 3) Submit and recieve reponse -> Token
+### 3) Submit and receive reponse -> Token
 
 The submit method will be called returning a promise that you can capture the JSON response using .then() and catch any errors using .catch(). A Token will be returned in the JSON response allowing you to charge that token at a later date. Make sure to wrap the .submit() method inside a click event. 
 
