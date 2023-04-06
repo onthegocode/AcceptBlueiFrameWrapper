@@ -70,7 +70,7 @@ The Charge function needs to be wrapped in some kind of click or submit event.
 The Amount must be an int or float. String will cause error.
 ```
 let chargeObj = {
-   Source: token,
+   Token: token,
    Amount: parseFloat($("#amount").val()),
 };
 ```
@@ -135,7 +135,7 @@ Please provide your own Public Source Key.
 
     $("#btn2").click(() => {
         let chargeObj = {
-            Source: token,
+            Token: token,
             Amount: parseFloat($("#amount").val()),
         };
 
