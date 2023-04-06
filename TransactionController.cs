@@ -65,14 +65,14 @@ public async Task<ActionResult<ChargeResponse>> SourceCharge([FromBody()] Charge
 	//Creates the request that will be later converted to JSON and used to call the Accept.blue api
 	Models.AcceptBlue.SourceChargeRequest sourceChargeRequest = new Models.AcceptBlue.SourceChargeRequest
 	{
-	Amount = chargeRequest.Amount, // required
-	Avs_Address = !(chargeRequest.Avs_Address is null) ? chargeRequest.Avs_Address : "", //allow for the field to be used but default to null or string.empty
-	Avs_Zip = !(chargeRequest.Avs_Zip is null) ? chargeRequest.Avs_Zip : "",//allow for the field to be used but default to null or string.empty
-	CVV2 = !(chargeRequest.CVV2 is null) ? chargeRequest.CVV2 : "123",
-	Expiry_Month = chargeRequest.Expiry_Month != 0 ? chargeRequest.Expiry_Month : DateTime.Now.Month + 1,
-	Expiry_Year = chargeRequest.Expiry_Year != 0 ? chargeRequest.Expiry_Year : DateTime.Now.Year + 1,
-	Source = "tkn-" + chargeRequest.Source, //make it customer profile token -> required
-	Software = !(chargeRequest.Software is null) ? chargeRequest.Software : "",//allow for the field to be used but default to null or string.empty
+		Amount = chargeRequest.Amount, // required
+		Avs_Address = !(chargeRequest.Avs_Address is null) ? chargeRequest.Avs_Address : "", //allow for the field to be used but default to null or string.empty
+		Avs_Zip = !(chargeRequest.Avs_Zip is null) ? chargeRequest.Avs_Zip : "",//allow for the field to be used but default to null or string.empty
+		CVV2 = !(chargeRequest.CVV2 is null) ? chargeRequest.CVV2 : "123",
+		Expiry_Month = chargeRequest.Expiry_Month != 0 ? chargeRequest.Expiry_Month : DateTime.Now.Month + 1,
+		Expiry_Year = chargeRequest.Expiry_Year != 0 ? chargeRequest.Expiry_Year : DateTime.Now.Year + 1,
+		Source = "tkn-" + chargeRequest.Token, //make it customer profile token -> required
+		Software = !(chargeRequest.Software is null) ? chargeRequest.Software : "",//allow for the field to be used but default to null or string.empty
 	};
 
 	Models.AcceptBlue.SourceChargeResponse sourceChargeResponse = AcceptBlue.SourceCharge(sourceChargeRequest); //calls the SourceCharge Method in the AcceptBlueService
