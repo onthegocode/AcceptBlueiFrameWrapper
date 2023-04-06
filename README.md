@@ -106,44 +106,44 @@ Please provide your own Public Source Key.
 </div>
 
 <script type="text/javascript">
-    let token;
-    const styles = {
-        labelType: "floating",
-        card: "border-bottom: 1px solid black",
-        expiryContainer: "border-bottom: 1px solid black",
-        cvv2: "border-bottom: 1px solid black",
-        avsZip: "border-bottom: 1px solid black",
-    };
+	let token;
+	const styles = {
+	    labelType: "floating",
+	    card: "border-bottom: 1px solid black",
+	    expiryContainer: "border-bottom: 1px solid black",
+	    cvv2: "border-bottom: 1px solid black",
+	    avsZip: "border-bottom: 1px solid black",
+	};
 
-    const dataObj = {
-        Name: "Sam",
-        Avs_Address: "78 Boston Court Racine, WI",
-        Avs_Zip: "53402",
-        Software: "Example Software",
-    };
+	const dataObj = {
+	    Name: "Sam",
+	    Avs_Address: "78 Boston Court Racine, WI",
+	    Avs_Zip: "53402",
+	    Software: "Example Software",
+	};
 
-    const iFrame = new HostedIFrame("PUBLIC SOURCE KEY", "iframeMount").styles(styles);
+	const iFrame = new HostedIFrame("PUBLIC SOURCE KEY", "iframeMount").styles(styles);
 
-    $('#btnSubmit').click(() => {
-        iFrame.submit(dataObj).then(response => {
-            token = response.token;
-            console.log(response);
-        }).catch(response => {
-            throw new Error(("" + response).replace("Error: ", ""));
-        })
-    });
+	$('#btnSubmit').click(() => {
+	    iFrame.submit(dataObj).then(response => {
+		token = response.token;
+		console.log(response);
+	    }).catch(response => {
+		throw new Error(("" + response).replace("Error: ", ""));
+	    })
+	});
 
-    $("#btn2").click(() => {
-        let chargeObj = {
-            Token: token,
-            Amount: parseFloat($("#amount").val()),
-        };
+	$("#btn2").click(() => {
+	    let chargeObj = {
+		Token: token,
+		Amount: parseFloat($("#amount").val()),
+	    };
 
-        charge(chargeObj).then(response => {
-            console.log(response);
-        }).catch(msg => {
-            throw new Error(("" + msg).replace("Error: ", ""));
-        });
-    });
+	    charge(chargeObj).then(response => {
+		console.log(response);
+	    }).catch(response => {
+		throw new Error(("" + response).replace("Error: ", ""));
+	    });
+	});
 </script>
 ```
