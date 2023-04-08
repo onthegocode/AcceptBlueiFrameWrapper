@@ -1,4 +1,4 @@
-# Card Form: 
+# Card Form:
 
 The Card Form library allows your app to process and save credit card information, verify those cards and charge them, with a few lines of code.
 
