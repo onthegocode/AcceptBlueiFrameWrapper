@@ -97,8 +97,9 @@ Please provide your own Public Source Key.
             iFrame.submit(dataObj).then(response => {
                 console.log(response);
             }).catch(response => {
-                document.querySelector('#errorMount').textContent = ("" + response).replace("Error: ", "");
-                throw new Error(("" + response).replace("Error: ", ""));
+	    	const error = ("" + response).replace("Error: ", "");
+                document.querySelector('#errorMount').textContent = error;
+                throw new Error(error);
             })
         });
 </script>
