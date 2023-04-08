@@ -46,7 +46,7 @@ iFrame.submit(dataObj).then(response => {
 #### Json Response Example:
 ```
 {
-  status: "Approved",
+  status: "Success",
   token: "DNJMJOZMRAUG2G6K",
   card_Type: "Visa",
   last_4: "1118",
