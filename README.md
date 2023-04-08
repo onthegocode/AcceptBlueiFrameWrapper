@@ -87,13 +87,14 @@ Please provide your own Public Source Key.
         const dataObj = {
             Name: "Sam",
             Avs_Address: "78 Boston Court Racine, WI",
+	    Avs_Zip: "56932",
+	    Software: "Example Software",
         };
 
         const iFrame = new HostedIFrame("PUBLIC SOURCE KEY", "iframeMount").styles(styles);
 
         $('#btnSubmit').click(() => {
             iFrame.submit(dataObj).then(response => {
-                token = response.token;
                 console.log(response);
             }).catch(response => {
                 document.querySelector('#errorMount').textContent = ("" + response).replace("Error: ", "");
