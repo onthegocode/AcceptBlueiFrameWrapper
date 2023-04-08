@@ -62,7 +62,7 @@ iFrame.submit(dataObj).then(response => {
 ```
 
 ## Sample Code:
-In this example, we are verifying and saving of the card as a token, it will return a JSON response that in this example is logged to the console. Also in any errors will catched will throw an error and show up as text.
+In this example, we are verifying and saving of the card as a token, it will return a JSON response that in this example is logged to the console. Also in this example errors will be catched and thrown. Card form errors will appear as text.
 
 Please provide your own Public Source Key.
 
