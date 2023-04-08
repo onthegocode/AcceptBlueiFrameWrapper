@@ -11,7 +11,7 @@ const dataObj = {
     Avs_Address: "78 Boston Court Racine, WI",
 };
 
-const iFrame = new HostedIFrame("pk_kVr1YRC4qMrrOYuuFV10M6VLxXcOp", "iframeMount").styles(styles);
+const iFrame = new HostedIFrame("pk_rXY", "iframeMount").styles(styles);
 
 $('#btnSubmit').click(() => {
     iFrame.submit(dataObj).then(response => {
