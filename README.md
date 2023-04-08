@@ -62,7 +62,7 @@ iFrame.submit(dataObj).then(response => {
 ```
 
 ## Sample Code:
-In this example, the verifying and saving of the card as a token is done also the charging of the token is done as well. For this example to work you must first submit the card form and once a JSON response is received ('it will show in the console'), input your amount and charge the token, and a response will be sent back ('it will show in the console'). In this example, it's a click event for the charge but would recommend a submit event to prevent double charging a token.
+In this example, we are verifying and saving of the card as a token, it will return a JSON response that in this example is logged to the console. Also in any errors will catched will throw an error and show up as text.
 
 Please provide your own Public Source Key.
 
