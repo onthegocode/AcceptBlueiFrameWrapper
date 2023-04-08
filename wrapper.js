@@ -2,31 +2,10 @@
 // Is wrapped in a function that automatically called to limit the variable namespace
 (() => {
 	let script = document.createElement("script");
-	script.src = "https://tokenization.develop.accept.blue/tokenization/v0.2";
+	script.src = "https://tokenization.develop.accept.blue/tokenization/v0.2"; //Change to Config 
 	script.id = "_iFrame";
 	document.head.appendChild(script);
 })();
-
-//Used to call the SourceCharge Method inside the TransactionController. This function would likely have to be wrapped in a click event to know when to go off. Takes a token as an argument
-function charge(object) {
-	//returns a promise to allow for the user to capture the Json response
-	return new Promise(function (resolve, reject) {
-		$(document).ready(function () {
-			$.ajax({
-				url: "/api/transactions/sourcecharge",
-				contentType: "application/json",
-				data: JSON.stringify(object),
-				type: "POST",
-				success: function (data) {
-					resolve(data); // returns Json response
-				},
-				error: function (error) {
-					reject(error); // returns error response returned from the AcceptBlueService
-				},
-			});
-		});
-	});
-}
 
 // Class that wraps Accept.blue iFrame
 class HostedIFrame {
