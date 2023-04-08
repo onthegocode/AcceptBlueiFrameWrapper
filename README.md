@@ -61,29 +61,6 @@ iFrame.submit(dataObj).then(response => {
 }
 ```
 
-## Charge:
-This function allows you to charge the token that you get from the submit() method. It takes an object as a parameter where the Amount and Source are required. But you have other options such as Avs_Address, Avs_Zip, CVV2, Expiry_Month, Expiry_Year, and Software (These options are optional).
-
-The Charge function needs to be wrapped in some kind of click or submit event.
-
-### Object Example: 
-The Amount must be an int or float. String will cause error.
-```
-let chargeObj = {
-   Token: token,
-   Amount: parseFloat($("#amount").val()),
-};
-```
-### Charge Example:
-Without click event
-```
-charge(chargeObj).then(response => {
-   console.log(response);
-}).catch(msg => {
-   throw new Error(("" + msg).replace("Error: ", ""));
-});
-```
-
 ## Sample Code:
 In this example, the verifying and saving of the card as a token is done also the charging of the token is done as well. For this example to work you must first submit the card form and once a JSON response is received ('it will show in the console'), input your amount and charge the token, and a response will be sent back ('it will show in the console'). In this example, it's a click event for the charge but would recommend a submit event to prevent double charging a token.
 
@@ -96,54 +73,32 @@ Please provide your own Public Source Key.
 		<p id="errorMount"></p>
 		<button type="button" id="btnSubmit">Submit</button>
 	</form>
-
-	<form id="chargeForm">
-		<label style="display:block;" for="amount">Amount:</label>
-		<input id="amount" name="amount" type="number" required />
-		
-		<button type="button" id="btn2">Charge Card</button>
-	</form>
 </div>
 
 <script type="text/javascript">
-	let token;
 	const styles = {
-	    labelType: "floating",
-	    card: "border-bottom: 1px solid black",
-	    expiryContainer: "border-bottom: 1px solid black",
-	    cvv2: "border-bottom: 1px solid black",
-	    avsZip: "border-bottom: 1px solid black",
-	};
+            labelType: "floating",
+            card: "border-bottom: 1px solid black",
+            expiryContainer: "border-bottom: 1px solid black",
+            cvv2: "border-bottom: 1px solid black",
+            avsZip: "border-bottom: 1px solid black",
+        };
 
-	const dataObj = {
-	    Name: "Sam",
-	    Avs_Address: "78 Boston Court Racine, WI",
-	    Avs_Zip: "53402",
-	    Software: "Example Software",
-	};
+        const dataObj = {
+            Name: "Sam",
+            Avs_Address: "78 Boston Court Racine, WI",
+        };
 
-	const iFrame = new HostedIFrame("PUBLIC SOURCE KEY", "iframeMount").styles(styles);
+        const iFrame = new HostedIFrame("PUBLIC SOURCE KEY", "iframeMount").styles(styles);
 
-	$('#btnSubmit').click(() => {
-	    iFrame.submit(dataObj).then(response => {
-		token = response.token;
-		console.log(response);
-	    }).catch(response => {
-		throw new Error(("" + response).replace("Error: ", ""));
-	    })
-	});
-
-	$("#btn2").click(() => {
-	    let chargeObj = {
-		Token: token,
-		Amount: parseFloat($("#amount").val()),
-	    };
-
-	    charge(chargeObj).then(response => {
-		console.log(response);
-	    }).catch(response => {
-		throw new Error(("" + response).replace("Error: ", ""));
-	    });
-	});
+        $('#btnSubmit').click(() => {
+            iFrame.submit(dataObj).then(response => {
+                token = response.token;
+                console.log(response);
+            }).catch(response => {
+                document.querySelector('#errorMount').textContent = ("" + response).replace("Error: ", "");
+                throw new Error(("" + response).replace("Error: ", ""));
+            })
+        });
 </script>
 ```
